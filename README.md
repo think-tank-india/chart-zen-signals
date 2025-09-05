@@ -1,73 +1,191 @@
-# Welcome to your Lovable project
+# NIFTY50 Trading Analysis & Signal Generation Platform
 
-## Project info
+A production-ready web application for real-time NIFTY50 trading analysis, technical indicators, and signal generation built with modern tech stack.
 
-**URL**: https://lovable.dev/projects/d645f3be-78d1-485e-8f71-41a2a5d3cce5
+## 🚀 Tech Stack
 
-## How can I edit this code?
+### Frontend
+- **Next.js** with TypeScript and App Router
+- **Tailwind CSS** for styling with custom trading theme
+- **shadcn/ui** components
+- **TradingView** charts integration (ready)
+- **React Query** for data management
 
-There are several ways of editing your application.
+### Backend (Planned)
+- **Node.js** with TypeScript
+- **Fastify** web framework
+- **WebSocket** for real-time updates
+- **PostgreSQL** for data persistence
+- **Redis** for caching
 
-**Use Lovable**
+### Key Features
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/d645f3be-78d1-485e-8f71-41a2a5d3cce5) and start prompting.
+- ✅ **Real-time Dashboard** - Live NIFTY50 price updates
+- ✅ **Technical Indicators** - 10+ indicators across trend, momentum, volume & volatility
+- ✅ **Signal Generation** - Automated BUY/SELL/HOLD signals with confidence scoring
+- ✅ **Professional UI** - Dark trading theme with responsive design
+- ✅ **Mock Data Provider** - Complete simulation for development
+- 🔄 **WebSocket Integration** - Real-time data streaming (planned)
+- 🔄 **Alert System** - In-app and email notifications (planned)
+- 🔄 **Historical Analysis** - Pattern recognition & backtesting (planned)
 
-Changes made via Lovable will be committed automatically to this repo.
+## 🏗️ Project Structure
 
-**Use your preferred IDE**
+```
+src/
+├── components/
+│   ├── ui/                 # shadcn/ui components
+│   └── trading/            # Trading-specific components
+│       ├── LivePriceCard.tsx
+│       ├── SignalsPanel.tsx
+│       ├── TechnicalIndicators.tsx
+│       └── MarketStatus.tsx
+├── hooks/
+│   └── use-trading-data.ts # Trading data management
+├── lib/
+│   ├── trading-data.ts     # Mock data provider
+│   └── utils.ts           # Utilities
+└── pages/
+    └── Dashboard.tsx       # Main trading dashboard
+```
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## 🚀 Quick Start
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Prerequisites
+- Node.js 18+ and npm
+- Modern web browser
 
-Follow these steps:
+### Installation
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
+```bash
+# Clone the repository
 git clone <YOUR_GIT_URL>
+cd nifty50-trader
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Install dependencies
+npm install
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Visit `http://localhost:8080` to see the trading dashboard.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 🎯 Current Features
 
-**Use GitHub Codespaces**
+### Live Price Card
+- Real-time NIFTY50 price with change indicators
+- Day high/low, volume, and previous close
+- Market status (Open/Closed) with live indicator
+- Color-coded bullish/bearish movements
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Signals Panel
+- Current trading signal (STRONG_BUY, BUY, HOLD, SELL, STRONG_SELL)
+- Confidence percentage and strength rating (1-5)
+- Entry, stop-loss, and target levels
+- Risk-reward ratio calculation
+- Strategy information and duration
 
-## What technologies are used for this project?
+### Technical Indicators
+- **Trend**: SMA(20,50), MACD, ADX
+- **Momentum**: RSI, Stochastic, Williams %R
+- **Volume**: OBV, VWAP
+- **Volatility**: Bollinger Bands, ATR
+- Organized by category with signal strength visualization
 
-This project is built with:
+### Market Status
+- Real-time connection status
+- Market hours and next session info
+- Last update timestamp
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 🔧 Configuration
 
-## How can I deploy this project?
+### Environment Variables
 
-Simply open [Lovable](https://lovable.dev/projects/d645f3be-78d1-485e-8f71-41a2a5d3cce5) and click on Share -> Publish.
+Create `.env.local` file:
 
-## Can I connect a custom domain to my Lovable project?
+```env
+# Development settings
+NEXT_PUBLIC_API_URL=http://localhost:3001
+NEXT_PUBLIC_WS_URL=ws://localhost:3001
 
-Yes, you can!
+# Production settings (when backend is ready)
+DATABASE_URL=postgresql://user:pass@localhost:5432/nifty50_trader
+REDIS_URL=redis://localhost:6379
+ZERODHA_MCP_URL=http://localhost:8080
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+# Feature flags
+ENABLE_PHASE=MVP
+ENABLE_EMAIL_ALERTS=false
+ENABLE_BACKTESTING=false
+```
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## 🎨 Design System
+
+The app uses a professional trading theme with:
+
+- **Colors**: Custom bull/bear colors with proper contrast
+- **Typography**: Inter font for readability
+- **Gradients**: Subtle gradients for modern look
+- **Animations**: Smooth transitions and micro-interactions
+- **Responsive**: Mobile-first design
+
+### Custom CSS Classes
+
+```css
+.text-bull      /* Bullish green */
+.text-bear      /* Bearish red */
+.text-neutral   /* Neutral yellow */
+.gradient-bull  /* Bull gradient background */
+.gradient-bear  /* Bear gradient background */
+.shadow-trading /* Professional shadow */
+```
+
+## 📊 Mock Data
+
+The app includes a comprehensive mock data provider that simulates:
+
+- Real-time price movements with volatility
+- Technical indicator calculations
+- Signal generation with various strategies
+- Market status and connection states
+
+## 🚧 Roadmap
+
+### Phase 2 - Enhanced Features
+- [ ] Historical pattern recognition
+- [ ] Email alert system
+- [ ] Basic backtesting
+- [ ] Performance tracking
+- [ ] Multi-timeframe analysis
+
+### Phase 3 - Advanced Features
+- [ ] Machine learning signal enhancement
+- [ ] Portfolio integration
+- [ ] Social features
+- [ ] Advanced risk management
+- [ ] Public API
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
+5. Open Pull Request
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## ⚠️ Disclaimer
+
+This application is for educational and analysis purposes only. It does not provide financial advice, and users should conduct their own research before making trading decisions. The developers are not responsible for any financial losses incurred through the use of this software.
+
+## 📞 Support
+
+For support, email support@nifty50trader.com or join our Discord community.
+
+---
+
+Built with ❤️ for the trading community
