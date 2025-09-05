@@ -1,9 +1,8 @@
+/* Professional Trading App Design System - All colors MUST be HSL */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Professional Trading App Design System - All colors MUST be HSL */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @layer base {
   :root {
@@ -123,7 +122,7 @@
 
   body {
     @apply bg-background text-foreground font-sans;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
   }
 
   /* Trading specific utility classes */

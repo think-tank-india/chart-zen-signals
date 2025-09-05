@@ -5,7 +5,9 @@ import { MarketStatus } from "@/components/trading/MarketStatus";
 import { QuickStats } from "@/components/trading/QuickStats";
 import { useTradingData } from "@/hooks/use-trading-data";
 import { Button } from "@/components/ui/button";
-import { RefreshCw, Settings, Bell, BarChart3, Activity } from "lucide-react";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { RefreshCw, Settings, Bell, BarChart3, Activity, Briefcase, TrendingUp } from "lucide-react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 
@@ -22,6 +24,16 @@ const Dashboard = () => {
   } = useTradingData();
   
   const { toast } = useToast();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleTabChange = (value: string) => {
+    if (value === "portfolio") {
+      navigate('/portfolio');
+    } else if (value === "dashboard") {
+      navigate('/dashboard');
+    }
+  };
 
   const handleRefresh = () => {
     refresh();
@@ -48,11 +60,30 @@ const Dashboard = () => {
       <header className="bg-gradient-header border-b border-border/50 sticky top-0 z-50">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-6">
               <div className="flex items-center gap-2">
                 <BarChart3 className="h-6 w-6 text-primary" />
                 <h1 className="text-xl font-bold">NIFTY50 Trader Pro</h1>
               </div>
+              
+              {/* Navigation Tabs */}
+              <Tabs 
+                value={location.pathname === '/portfolio' ? 'portfolio' : 'dashboard'} 
+                onValueChange={handleTabChange}
+                className="w-auto"
+              >
+                <TabsList className="bg-secondary/50">
+                  <TabsTrigger value="dashboard" className="flex items-center gap-2">
+                    <TrendingUp className="h-4 w-4" />
+                    Market Dashboard
+                  </TabsTrigger>
+                  <TabsTrigger value="portfolio" className="flex items-center gap-2">
+                    <Briefcase className="h-4 w-4" />
+                    My Portfolio
+                  </TabsTrigger>
+                </TabsList>
+              </Tabs>
+              
               <MarketStatus 
                 isOpen={marketData.isOpen} 
                 isConnected={isConnected}

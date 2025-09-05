@@ -5,11 +5,17 @@ A production-ready web application for real-time NIFTY50 trading analysis, techn
 ## 🚀 Tech Stack
 
 ### Frontend
-- **Next.js** with TypeScript and App Router
+- **React** with TypeScript and Vite
 - **Tailwind CSS** for styling with custom trading theme
 - **shadcn/ui** components
 - **TradingView** charts integration (ready)
 - **React Query** for data management
+
+### Real Data Integration
+- **Kite Connect MCP** for real-time portfolio and market data
+- **Yahoo Finance API** fallback for market data
+- **Real-time price updates** with auto-refresh
+- **Authentication handling** with Kite Connect
 
 ### Backend (Planned)
 - **Node.js** with TypeScript
@@ -21,10 +27,13 @@ A production-ready web application for real-time NIFTY50 trading analysis, techn
 ### Key Features
 
 - ✅ **Real-time Dashboard** - Live NIFTY50 price updates
+- ✅ **Real Portfolio Data** - Live holdings from Kite Connect API
 - ✅ **Technical Indicators** - 10+ indicators across trend, momentum, volume & volatility
 - ✅ **Signal Generation** - Automated BUY/SELL/HOLD signals with confidence scoring
 - ✅ **Professional UI** - Dark trading theme with responsive design
-- ✅ **Mock Data Provider** - Complete simulation for development
+- ✅ **Kite MCP Integration** - Direct integration with Kite Connect for real data
+- ✅ **Auto-refresh** - Portfolio and market data updates every 30-60 seconds
+- ✅ **Authentication Flow** - Seamless Kite Connect login integration
 - 🔄 **WebSocket Integration** - Real-time data streaming (planned)
 - 🔄 **Alert System** - In-app and email notifications (planned)
 - 🔄 **Historical Analysis** - Pattern recognition & backtesting (planned)
@@ -35,18 +44,25 @@ A production-ready web application for real-time NIFTY50 trading analysis, techn
 src/
 ├── components/
 │   ├── ui/                 # shadcn/ui components
-│   └── trading/            # Trading-specific components
-│       ├── LivePriceCard.tsx
-│       ├── SignalsPanel.tsx
-│       ├── TechnicalIndicators.tsx
-│       └── MarketStatus.tsx
+│   ├── trading/            # Trading-specific components
+│   │   ├── LivePriceCard.tsx
+│   │   ├── SignalsPanel.tsx
+│   │   ├── TechnicalIndicators.tsx
+│   │   └── MarketStatus.tsx
+│   └── portfolio/          # Portfolio components
+│       ├── PortfolioSummary.tsx
+│       └── HoldingsTable.tsx
 ├── hooks/
-│   └── use-trading-data.ts # Trading data management
+│   ├── use-trading-data.ts # Trading data management
+│   └── use-portfolio-data.ts # Portfolio data with Kite MCP
 ├── lib/
-│   ├── trading-data.ts     # Mock data provider
+│   ├── kite-mcp-client.ts  # Kite MCP integration client
+│   ├── kite-real-data.ts   # Real Kite data provider
+│   ├── trading-data.ts     # Mock data provider (fallback)
 │   └── utils.ts           # Utilities
 └── pages/
-    └── Dashboard.tsx       # Main trading dashboard
+    ├── Dashboard.tsx       # Main trading dashboard
+    └── Portfolio.tsx       # Portfolio management page
 ```
 
 ## 🚀 Quick Start
@@ -70,6 +86,34 @@ npm run dev
 ```
 
 Visit `http://localhost:8080` to see the trading dashboard.
+
+## 🔌 Kite MCP Integration
+
+The application now integrates with **Kite Connect MCP** for real-time portfolio data:
+
+### Setup
+1. Ensure you have Kite MCP tools available in your environment
+2. The app will automatically detect and use Kite MCP when available
+3. Falls back to mock data for development when MCP is not available
+
+### Features
+- **Real Holdings Data**: Fetches live portfolio holdings from your Kite account
+- **Real-time Prices**: Updates last traded prices for all holdings
+- **Auto-refresh**: Portfolio data refreshes every 60 seconds
+- **Authentication Flow**: Seamless login integration with error handling
+- **Fallback Support**: Uses mock data when Kite MCP is unavailable
+
+### Authentication
+1. Click "Login to Kite" button in the portfolio page
+2. Complete the OAuth flow in the new window
+3. Return to the app and refresh to see real data
+4. The app handles session management automatically
+
+### Available MCP Tools Used
+- `mcp_kite_get_holdings` - Fetch portfolio holdings
+- `mcp_kite_get_ltp` - Get last traded prices
+- `mcp_kite_login` - Handle authentication
+- `mcp_kite_get_profile` - Verify authentication status
 
 ## 🎯 Current Features
 
