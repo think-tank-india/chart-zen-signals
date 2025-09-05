@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { tradingDataProvider, MarketData, TechnicalIndicator, TradingSignal } from '@/lib/trading-data';
+import { realTradingDataProvider, MarketData, TechnicalIndicator, TradingSignal } from '@/lib/real-trading-data';
 
 interface UseTradingDataReturn {
   marketData: MarketData | null;
@@ -9,7 +9,7 @@ interface UseTradingDataReturn {
   lastUpdate: Date | null;
   accuracy: number;
   activeAlerts: number;
-  refresh: () => void;
+  refresh: () => Promise<void>;
 }
 
 export function useTradingData(): UseTradingDataReturn {
@@ -21,11 +21,15 @@ export function useTradingData(): UseTradingDataReturn {
   const [accuracy] = useState(Math.floor(Math.random() * 15) + 80); // Mock accuracy 80-95%
   const [activeAlerts] = useState(Math.floor(Math.random() * 8) + 2); // Mock active alerts 2-10
 
-  const refresh = useCallback(() => {
+  const refresh = useCallback(async () => {
     try {
-      setMarketData(tradingDataProvider.generateMarketData());
-      setIndicators(tradingDataProvider.generateTechnicalIndicators());
-      setSignal(tradingDataProvider.generateTradingSignal());
+      const marketData = await realTradingDataProvider.fetchNiftyData();
+      const indicators = realTradingDataProvider.generateTechnicalIndicators();
+      const signal = realTradingDataProvider.generateTradingSignal();
+      
+      setMarketData(marketData);
+      setIndicators(indicators);
+      setSignal(signal);
       setLastUpdate(new Date());
       setIsConnected(true);
     } catch (error) {
@@ -38,23 +42,11 @@ export function useTradingData(): UseTradingDataReturn {
     // Initial load
     refresh();
 
-    // Set up real-time updates (every 5 seconds for demo)
-    const interval = setInterval(refresh, 5000);
-
-    // Simulate occasional connection issues
-    const connectionInterval = setInterval(() => {
-      if (Math.random() < 0.05) { // 5% chance of temporary disconnection
-        setIsConnected(false);
-        setTimeout(() => {
-          setIsConnected(true);
-          refresh();
-        }, 2000);
-      }
-    }, 10000);
+    // Set up data updates every 5 minutes (300,000 ms)
+    const interval = setInterval(refresh, 300000);
 
     return () => {
       clearInterval(interval);
-      clearInterval(connectionInterval);
     };
   }, [refresh]);
 
