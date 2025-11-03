@@ -16,7 +16,7 @@ const App = () => (
       <div className="dark"> {/* Force dark mode for trading theme */}
         <Toaster />
         <Sonner />
-        <BrowserRouter>
+        <BrowserRouter basename={import.meta.env.BASE_URL}>
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/dashboard" element={<Dashboard />} />
